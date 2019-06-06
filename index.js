@@ -1,4 +1,7 @@
 const path = require('path');
+
+const expressEdge = require('express-edge');
+
 const express = require('express');
 
 const port = 5500;
@@ -7,24 +10,28 @@ const app = new express();
 
 app.use(express.static('public'));
 
+app.use(expressEdge);
+
+app.set('views', `${__dirname}/views`);
+
 //Home Page
 app.get('/', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'pages/index.html'));
+    res.render('index');
 });
 
 // About Page
 app.get('/about', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'pages/about.html'));
+    res.render('about');
 });
 
 // SamplePost Page
 app.get('/post', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'pages/post.html'));
+    res.render('post');
 });
 
 // Contact Page
 app.get('/contact', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'pages/contact.html'));
+    res.render('contact');
 });
 
 app.listen(port, () => {
