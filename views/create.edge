@@ -1,0 +1,49 @@
+@layout('layouts.app')
+
+@section('content')
+
+{{--  Header Section  --}}
+<header class="masthead" style="background-image: url('/img/contact-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="page-heading">
+                    <h1>New Post</h1>
+                    <span class="subheading">Create New Post and Shair Them</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+{{--  Input Form  --}}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <form action="/posts/store" method="POST">
+                <div class="control-group">
+                    <div class="form-group floating-label-form-group controls">
+                        <label>Title</label>
+                        <input type="text" class="form-control" name="title" placeholder="Title">
+                    </div>
+
+                    <div class="form-group floating-label-form-group controls">
+                        <label>Description</label>
+                        <input type="text" class="form-control" name="description" placeholder="Description">
+                    </div>
+
+                    <div class="form-group floating-label-form-group controls">
+                        <label>Content</label>
+                        <textarea name="content" cols="30" rows="10" class="form-control" placeholder="Content..."></textarea>
+                    </div>
+                </div>
+                <div class="form-group text-center mt-4">
+                    <button class="btn btn-info btn-block">Create Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@endsection
