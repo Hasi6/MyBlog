@@ -49,8 +49,13 @@ app.get('/about', (req, res) => {
 });
 
 // SamplePost Page
-app.get('/post', (req, res) => {
-    res.render('post');
+app.get('/post/:id', async(req, res) => {
+
+    const post = await Post.findById(req.params.id)
+
+    res.render('post', {
+        post
+    });
 });
 
 // Contact Page

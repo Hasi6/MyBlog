@@ -27,14 +27,14 @@
                 @each(post in posts)
 
                 <div class="post-preview">
-                    <a href="post.html">
+                    <a href="/post/{{post._id}}">
                         <h2 class="post-title">
                             {{post.title}}
                         </h2>
                         
                     </a>
                     <p class="post-meta">Posted by
-                        <a href="#">Start Bootstrap</a> on July 8, 2019</p>
+                        <a href="#">{{post.username}}</a> {{post.createdAt.toDateString()}}</p>
                 </div>
                     
                 @endeach
