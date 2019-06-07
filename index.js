@@ -10,11 +10,18 @@ const bodyParser = require('body-parser');
 
 const Post = require('./database/models/Post');
 
+const fileUpload = require('express-fileupload');
+
 const port = 5500;
 
 const app = new express();
 
+
+
 mongoose.connect('mongodb://localhost/MyBlog');
+
+app.use(fileUpload());
+
 
 app.use(express.static('public'));
 
@@ -66,9 +73,18 @@ app.get('/contact', (req, res) => {
 // send data to database
 app.post('/posts/store', (req, res) => {
 
-    Post.create(req.body, (err, post) => {
-        res.redirect('/');
+    const { image } = req.files;
+
+    image.mv(path.resolve(__dirname, 'public/posts', image.name), (err) => {
+        Post.create({
+            ...req.body,
+            image: `/posts/${image.name}`
+        }, (err, post) => {
+            res.redirect('/');
+        })
     })
+
+
 
 
 })
