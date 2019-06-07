@@ -29,8 +29,13 @@ app.use(bodyParser.urlencoded({
 }));
 
 //Home Page
-app.get('/', (req, res) => {
-    res.render('index');
+app.get('/', async(req, res) => {
+
+    const posts = await Post.find({});
+    console.log(posts);
+    res.render('index', {
+        posts: posts
+    });
 });
 
 // create new Post page
