@@ -12,6 +12,7 @@ const storePostController = require("./controllers/storePost");
 const getPostController = require("./controllers/getPost");
 const aboutPageController = require("./controllers/aboutPage");
 const contactPageController = require("./controllers/contactPage");
+const registerPageController = require("./controllers/createUser");
 const validateMiddlewareController = require("./middleware/storePost");
 
 const app = new express();
@@ -39,6 +40,9 @@ app.use('/posts/store', validateCreatePostMiddleware);
 
 //Home Page
 app.get('/', homePageController);
+
+//New User Registration
+app.get('/auth/register', registerPageController);
 
 // create new Post page
 app.get('/post/new', createPostController);
