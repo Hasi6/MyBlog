@@ -14,6 +14,7 @@ const aboutPageController = require("./controllers/aboutPage");
 const contactPageController = require("./controllers/contactPage");
 const registerPageController = require("./controllers/createUser");
 const validateMiddlewareController = require("./middleware/storePost");
+const storeUserController = require("./controllers/storeUser");
 
 const app = new express();
 
@@ -56,8 +57,11 @@ app.get('/post/:id', getPostController);
 // Contact Page
 app.get('/contact', contactPageController);
 
-// send data to database
+// send create posts data to database
 app.post('/posts/store', storePostController);
+
+// send user details to the database
+app.post('/auth/register', storeUserController)
 
 // localhost port
 app.listen(port, () => {
