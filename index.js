@@ -1,48 +1,36 @@
-const path = require('path');
-
 const expressEdge = require('express-edge');
-
 const express = require('express');
-
 const mongoose = require('mongoose');
-
 const bodyParser = require('body-parser');
-
-const Post = require('./database/models/Post');
-
 const fileUpload = require('express-fileupload');
-
 const port = 5500;
+
+// store create functions in variables
+const createPostController = require("./controllers/createPost");
+const homePageController = require("./controllers/homePage");
+const storePostController = require("./controllers/storePost");
+const getPostController = require("./controllers/getPost");
+const aboutPageController = require("./controllers/aboutPage");
+const contactPageController = require("./controllers/contactPage");
+const validateMiddlewareController = require("./controllers/validateMiddleware");
 
 const app = new express();
 
-
-
+// connet with database
 mongoose.connect('mongodb://localhost/MyBlog');
 
 app.use(fileUpload());
-
-
 app.use(express.static('public'));
-
 app.use(expressEdge);
-
 app.set('views', `${__dirname}/views`);
-
 app.use(bodyParser.json());
-
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
 
-// Check if the create post page image is select or not
-const validateCreatePostMiddleware = (req, res, next) => {
-    if (!req.files || !req.body.username || !req.body.title || !req.body.subtitle || !req.body.content) {
-        return res.redirect("/post/new");
-    }
-    next();
-}
+// Check if the create post page input fields are filled or not
+const validateCreatePostMiddleware = validateMiddlewareController;
 
 // only check in /posts/store page
 app.use('/posts/store', validateCreatePostMiddleware);
@@ -50,59 +38,24 @@ app.use('/posts/store', validateCreatePostMiddleware);
 
 
 //Home Page
-app.get('/', async(req, res) => {
-
-    const posts = await Post.find({});
-    console.log(posts);
-    res.render('index', {
-        posts: posts
-    });
-});
+app.get('/', homePageController);
 
 // create new Post page
-app.get('/post/new', (req, res) => {
-    res.render('create');
-});
+app.get('/post/new', createPostController);
 
 // About Page
-app.get('/about', (req, res) => {
-    res.render('about');
-});
+app.get('/about', aboutPageController);
 
 // SamplePost Page
-app.get('/post/:id', async(req, res) => {
-
-    const post = await Post.findById(req.params.id)
-
-    res.render('post', {
-        post
-    });
-});
+app.get('/post/:id', getPostController);
 
 // Contact Page
-app.get('/contact', (req, res) => {
-    res.render('contact');
-});
+app.get('/contact', contactPageController);
 
 // send data to database
-app.post('/posts/store', (req, res) => {
+app.post('/posts/store', storePostController);
 
-    const { image } = req.files;
-
-    image.mv(path.resolve(__dirname, 'public/posts', image.name), (err) => {
-        Post.create({
-            ...req.body,
-            image: `/posts/${image.name}`
-        }, (err, post) => {
-            res.redirect('/');
-        })
-    })
-
-
-
-
-})
-
+// localhost port
 app.listen(port, () => {
     console.log(`App Start on ${port}`);
 })
