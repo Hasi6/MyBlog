@@ -35,6 +35,20 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+
+// Check if the create post page image is select or not
+const validateCreatePostMiddleware = (req, res, next) => {
+    if (!req.files || !req.body.username || !req.body.title || !req.body.subtitle || !req.body.content) {
+        return res.redirect("/post/new");
+    }
+    next();
+}
+
+// only check in /posts/store page
+app.use('/posts/store', validateCreatePostMiddleware);
+
+
+
 //Home Page
 app.get('/', async(req, res) => {
 
