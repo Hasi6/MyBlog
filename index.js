@@ -12,7 +12,7 @@ const storePostController = require("./controllers/storePost");
 const getPostController = require("./controllers/getPost");
 const aboutPageController = require("./controllers/aboutPage");
 const contactPageController = require("./controllers/contactPage");
-const validateMiddlewareController = require("./controllers/validateMiddleware");
+const validateMiddlewareController = require("./middleware/storePost");
 
 const app = new express();
 
