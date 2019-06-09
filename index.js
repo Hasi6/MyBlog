@@ -15,6 +15,8 @@ const contactPageController = require("./controllers/contactPage");
 const registerPageController = require("./controllers/createUser");
 const validateMiddlewareController = require("./middleware/storePost");
 const storeUserController = require("./controllers/storeUser");
+const loginPageController = require("./controllers/login");
+const loginUserController = require("./controllers/loginUser");
 
 const app = new express();
 
@@ -61,7 +63,13 @@ app.get('/contact', contactPageController);
 app.post('/posts/store', storePostController);
 
 // send user details to the database
-app.post('/auth/register', storeUserController)
+app.post('/auth/register', storeUserController);
+
+//User login
+app.get('/auth/login', loginPageController);
+
+// post login data
+app.use('/users/login', loginUserController);
 
 // localhost port
 app.listen(port, () => {

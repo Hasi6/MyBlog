@@ -1,0 +1,46 @@
+@layout('layouts.app')
+
+@section('content')
+
+{{--  Header Section  --}}
+<header class="masthead" style="background-image: url('/img/register.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="page-heading">
+                    <h1>Login</h1>
+                    <span class="subheading">Create New Post and Shair Them</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+{{--  Input Form  --}}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <form action="/users/login" method="POST" enctype="multipart/form-data">
+                <div class="control-group">
+
+                    <div class="form-group floating-label-form-group controls">
+                        <label>Email</label>
+                        <input type="email" class="form-control" name="email" placeholder="Enter Your Email">
+                    </div>
+
+                    <div class="form-group floating-label-form-group controls">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="password" placeholder="Enter Password">
+                    </div>
+
+
+                <div class="form-group text-center mt-4">
+                    <button class="btn btn-info btn-block">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@endsection
