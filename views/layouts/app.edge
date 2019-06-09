@@ -47,12 +47,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/post">Sample Post</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/auth/register">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/auth/login">Login</a>
-                    </li>
+
+                    @if(!authMiddleware)
+                    {{--  if user is not logged in then only display the register and login button  --}}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/auth/register">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/auth/login">Login</a>
+                        </li>
+                    @endif
                 </ul>
             </div>
         </div>

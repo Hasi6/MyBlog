@@ -6,6 +6,7 @@ const fileUpload = require('express-fileupload');
 const expressSession = require('express-session');
 const connectMongo = require('connect-mongo');
 const connectFlash = require('connect-flash');
+const edge = require('edge.js');
 const port = 5500;
 
 // store create functions in variables
@@ -49,6 +50,10 @@ app.use(fileUpload());
 app.use(express.static('public'));
 app.use(expressEdge);
 app.set('views', `${__dirname}/views`);
+app.use('*', (req, res, next) => {
+    edge.global('authMiddleware', req.session.userId);
+    next();
+})
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
