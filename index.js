@@ -15,10 +15,13 @@ const getPostController = require("./controllers/getPost");
 const aboutPageController = require("./controllers/aboutPage");
 const contactPageController = require("./controllers/contactPage");
 const registerPageController = require("./controllers/createUser");
-const validateMiddlewareController = require("./middleware/storePost");
 const storeUserController = require("./controllers/storeUser");
 const loginPageController = require("./controllers/login");
 const loginUserController = require("./controllers/loginUser");
+
+// middlewares
+const validateMiddlewareController = require("./middleware/storePost");
+const authMiddleware = require("./middleware/auth");
 
 const app = new express();
 
@@ -50,8 +53,8 @@ app.use(bodyParser.urlencoded({
 // Check if the create post page input fields are filled or not
 const validateCreatePostMiddleware = validateMiddlewareController;
 
-// only check in /posts/store page
-app.use('/posts/store', validateCreatePostMiddleware);
+
+
 
 
 
@@ -61,8 +64,8 @@ app.get('/', homePageController);
 //New User Registration
 app.get('/auth/register', registerPageController);
 
-// create new Post page
-app.get('/post/new', createPostController);
+// create new Post page before check the auth middleware if the user is logged in or not
+app.get('/post/new', authMiddleware, createPostController);
 
 // About Page
 app.get('/about', aboutPageController);
@@ -73,8 +76,8 @@ app.get('/post/:id', getPostController);
 // Contact Page
 app.get('/contact', contactPageController);
 
-// send create posts data to database
-app.post('/posts/store', storePostController);
+// send create posts data to database and before send run the middleware function is user logged in after that to check all fields are filled
+app.post('/posts/store', authMiddleware, validateCreatePostMiddleware, storePostController);
 
 // send user details to the database
 app.post('/auth/register', storeUserController);
