@@ -14,6 +14,8 @@ module.exports = (req, res) => {
             bcrypt.compare(password, user.password, (err, match) => {
                 if (match) {
                     // store user session
+                    // now user id is save in the session
+                    req.session.userId = user._id;
                     res.redirect('/')
                 } else {
                     console.log(err);

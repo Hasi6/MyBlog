@@ -3,6 +3,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
+const expressSession = require('express-session');
+const connectMongo = require('connect-mongo');
 const port = 5500;
 
 // store create functions in variables
@@ -22,6 +24,18 @@ const app = new express();
 
 // connet with database
 mongoose.connect('mongodb://localhost/MyBlog');
+
+const mongoStore = connectMongo(expressSession);
+
+// register sessions to keep track on user email and password whitch user entered
+app.use(expressSession({
+    secret: 'secret',
+    store: new mongoStore({
+        mongooseConnection: mongoose.connection
+    })
+}));
+
+
 
 app.use(fileUpload());
 app.use(express.static('public'));
