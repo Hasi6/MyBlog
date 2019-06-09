@@ -9,6 +9,9 @@ module.exports = (req, res) => {
             // save errors in flash Function
             req.flash('registrationErrors', registrationErrors);
 
+            //save the user enter details and keep them with errors
+            req.flash('data', req.body);
+
             return res.redirect('/auth/register');
         }
         res.redirect('/');
