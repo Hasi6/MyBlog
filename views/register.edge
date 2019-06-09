@@ -21,6 +21,16 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
+            {{--  check if there is any errors if true display errors list  --}}
+            @if(errors.length > 0)
+                <ui class="list-group">
+                    @each(error in errors)
+                    <li class="list-group-item text-danger">
+                        {{error}}
+                    </li>
+                    @endeach
+                </ui>
+            @endif
             <form action="/auth/register" method="POST" enctype="multipart/form-data">
                 <div class="control-group">
 
