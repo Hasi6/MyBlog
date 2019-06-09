@@ -23,6 +23,7 @@ const loginUserController = require("./controllers/loginUser");
 // middlewares
 const validateMiddlewareController = require("./middleware/storePost");
 const authMiddleware = require("./middleware/auth");
+const redirectIfAuthenticatedMiddleware = require("./middleware/redirectIfAuthenticated");
 
 const app = new express();
 
@@ -65,8 +66,7 @@ const validateCreatePostMiddleware = validateMiddlewareController;
 //Home Page
 app.get('/', homePageController);
 
-//New User Registration
-app.get('/auth/register', registerPageController);
+
 
 // create new Post page before check the auth middleware if the user is logged in or not
 app.get('/post/new', authMiddleware, createPostController);
@@ -84,13 +84,16 @@ app.get('/contact', contactPageController);
 app.post('/posts/store', authMiddleware, validateCreatePostMiddleware, storePostController);
 
 // send user details to the database
-app.post('/auth/register', storeUserController);
+app.post('/auth/register', redirectIfAuthenticatedMiddleware, storeUserController); //check if user logged in already
+
+//New User Registration
+app.get('/auth/register', redirectIfAuthenticatedMiddleware, registerPageController); //check if user logged in already
 
 //User login
-app.get('/auth/login', loginPageController);
+app.get('/auth/login', redirectIfAuthenticatedMiddleware, loginPageController); //check if user logged in already
 
 // post login data
-app.use('/users/login', loginUserController);
+app.use('/users/login', redirectIfAuthenticatedMiddleware, loginUserController); //check if user logged in already
 
 // localhost port
 app.listen(port, () => {
