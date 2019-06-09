@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 const expressSession = require('express-session');
 const connectMongo = require('connect-mongo');
+const connectFlash = require('connect-flash');
 const port = 5500;
 
 // store create functions in variables
@@ -27,6 +28,9 @@ const app = new express();
 
 // connet with database
 mongoose.connect('mongodb://localhost/MyBlog');
+
+// flash
+app.use(connectFlash());
 
 const mongoStore = connectMongo(expressSession);
 

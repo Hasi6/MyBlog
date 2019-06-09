@@ -6,8 +6,8 @@ module.exports = (req, res) => {
         if (err) {
             // display Errors
             const registrationErrors = Object.keys(err.errors).map(key => err.errors[key].message);
-            // save errors in session
-            req.session.registrationErrors = registrationErrors;
+            // save errors in flash Function
+            req.flash('registrationErrors', registrationErrors);
 
             return res.redirect('/auth/register');
         }
