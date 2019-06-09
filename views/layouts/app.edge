@@ -56,6 +56,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/auth/login">Login</a>
                         </li>
+                    @else(authMiddleware)
+                        {{--  only show the logout link is the user logged in  --}}
+                        <li class="nav-item">
+                                <a class="nav-link" href="/auth/logout">Logout</a>
+                        </li>
+
                     @endif
                 </ul>
             </div>

@@ -20,6 +20,7 @@ const registerPageController = require("./controllers/createUser");
 const storeUserController = require("./controllers/storeUser");
 const loginPageController = require("./controllers/login");
 const loginUserController = require("./controllers/loginUser");
+const logoutUserController = require("./controllers/logoutUser");
 
 // middlewares
 const validateMiddlewareController = require("./middleware/storePost");
@@ -99,6 +100,9 @@ app.get('/auth/login', redirectIfAuthenticatedMiddleware, loginPageController); 
 
 // post login data
 app.use('/users/login', redirectIfAuthenticatedMiddleware, loginUserController); //check if user logged in already
+
+// user logout
+app.get('/auth/logout', redirectIfAuthenticatedMiddleware, logoutUserController);
 
 // localhost port
 app.listen(port, () => {
