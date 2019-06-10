@@ -102,7 +102,12 @@ app.get('/auth/login', redirectIfAuthenticatedMiddleware, loginPageController); 
 app.use('/users/login', redirectIfAuthenticatedMiddleware, loginUserController); //check if user logged in already
 
 // user logout
-app.get('/auth/logout', redirectIfAuthenticatedMiddleware, logoutUserController);
+app.get('/auth/logout', authMiddleware, logoutUserController);
+
+// not found
+app.use((req, res) => {
+    res.render('notFound');
+});
 
 // localhost port
 app.listen(port, () => {
