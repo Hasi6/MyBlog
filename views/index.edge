@@ -25,8 +25,8 @@
             <div class="col-lg-8 col-md-10 mx-auto">
                 
                 @each(post in posts)
-
                 <div class="post-preview">
+                        <img src="{{post.image}}" alt="" width="400px" height="300px">
                     <a href="/post/{{post._id}}">
                         <h2 class="post-title">
                             {{post.title}}
@@ -34,7 +34,8 @@
                         
                     </a>
                     <p class="post-meta">Posted by
-                        <a href="#">{{post.username}}</a> {{post.createdAt.toDateString()}}</p>
+                        <a href="#">{{post.author.username}}</a> {{post.createdAt.toDateString()}}</p>
+                   
                 </div>
                     
                 @endeach
