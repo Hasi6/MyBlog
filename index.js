@@ -7,7 +7,7 @@ const expressSession = require('express-session');
 const connectMongo = require('connect-mongo');
 const connectFlash = require('connect-flash');
 const edge = require('edge.js');
-const port = 5500;
+const port = process.env.PORT || 5500;
 
 // store create functions in variables
 const createPostController = require("./controllers/createPost");
@@ -30,7 +30,7 @@ const redirectIfAuthenticatedMiddleware = require("./middleware/redirectIfAuthen
 const app = new express();
 
 // connet with database
-mongoose.connect('mongodb://localhost/MyBlog');
+mongoose.connect('mongodb+srv://hasitha:Freedom6@cluster0-rsxwe.gcp.mongodb.net/test?retryWrites=true&w=majority');
 
 // flash
 app.use(connectFlash());
